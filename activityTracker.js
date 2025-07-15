@@ -20,8 +20,8 @@ const myWeek = [
 
 // 1. Total hours spent on physical activities
 function totalPhysicalHours(data) {
-  const physical = data.filter(entry => entry.category === "physical"); // just physical ones
-  const total = physical.reduce((sum, act) => sum + act.hoursSpent, 0); // add up hours
+  const physical = data.filter(entry => entry.category === "physical");
+  const total = physical.reduce((sum, act) => sum + act.hoursSpent, 0);
   return total;
 }
 
@@ -30,11 +30,22 @@ function averageEveningEnjoyment(data) {
   const evenings = data.filter(entry => entry.timeOfDay === "evening");
   const totalEnjoyment = evenings.reduce((sum, act) => sum + act.enjoyment, 0);
   const avg = totalEnjoyment / evenings.length;
-  return avg.toFixed(1); // round to 1 decimal
+  return avg.toFixed(1);
 }
+
+//  CUSTOM HIGHER-ORDER FUNCTION 
+
+// This function accepts a test function and filters the week using it
+function filterByCondition(testFn) {
+  return myWeek.filter(testFn);
+}
+
+// Example: activities with low hours but high enjoyment
+const lowEffortHighEnjoyment = filterByCondition(entry => entry.hoursSpent < 2 && entry.enjoyment >= 8);
 
 //  OUTPUT 
 
 console.log("Analyzing My Weekly Activities...\n");
 console.log("Total hours spent on physical activity:", totalPhysicalHours(myWeek));
 console.log("Average enjoyment in the evening:", averageEveningEnjoyment(myWeek));
+console.log("Low-effort, high-enjoyment activities:", lowEffortHighEnjoyment.map(entry => entry.activity));

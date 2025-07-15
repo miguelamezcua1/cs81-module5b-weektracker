@@ -11,7 +11,30 @@ const myWeek = [
   { day: "Sunday", activity: "drawing", category: "creative", hoursSpent: 1.2, enjoyment: 9, timeOfDay: "afternoon" }
 ];
 
-// --- PREDICTIONS ---
+//  PREDICTIONS 
 // I think journaling or drawing will have the highest enjoyment.
 // The "learning" category might show up the most.
 // Evenings might have higher enjoyment because I usually relax then.
+
+//  ANALYSIS FUNCTIONS 
+
+// 1. Total hours spent on physical activities
+function totalPhysicalHours(data) {
+  const physical = data.filter(entry => entry.category === "physical"); // just physical ones
+  const total = physical.reduce((sum, act) => sum + act.hoursSpent, 0); // add up hours
+  return total;
+}
+
+// 2. Average enjoyment for evening activities
+function averageEveningEnjoyment(data) {
+  const evenings = data.filter(entry => entry.timeOfDay === "evening");
+  const totalEnjoyment = evenings.reduce((sum, act) => sum + act.enjoyment, 0);
+  const avg = totalEnjoyment / evenings.length;
+  return avg.toFixed(1); // round to 1 decimal
+}
+
+//  OUTPUT 
+
+console.log("Analyzing My Weekly Activities...\n");
+console.log("Total hours spent on physical activity:", totalPhysicalHours(myWeek));
+console.log("Average enjoyment in the evening:", averageEveningEnjoyment(myWeek));
